@@ -46,7 +46,7 @@ exports.getProducts = catchAsync(async (req, res, next) => {
                     return ids;
                 } catch (error) {
                     console.error('Error getting subcategories:', error);
-                    return [catId]; // Return just the original category if error
+                    return [catId]; 
                 }
             };
             
@@ -68,11 +68,9 @@ exports.getProducts = catchAsync(async (req, res, next) => {
                 }
             } catch (error) {
                 console.error('Error filtering by gender:', error);
-                // Continue without gender filter if error
+                
             }
         }
-        
-        // Filter by price range
         if (minPrice) {
             const min = parseFloat(minPrice);
             if (!isNaN(min) && min >= 0) {
@@ -85,8 +83,6 @@ exports.getProducts = catchAsync(async (req, res, next) => {
                 query.price = { ...query.price, $lte: max };
             }
         }
-        
-        // Filter by stock
         if (inStock === 'true') {
             query.stock = { $gt: 0 };
         } else if (inStock === 'false') {
